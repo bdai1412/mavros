@@ -118,6 +118,10 @@ void MAVConnInterface::parse_buffer(const char *pfx, uint8_t *buf, const size_t 
 
 		if (msg_received != Framing::incomplete) {
 			log_recv(pfx, message, msg_received);
+			
+			// Just for test id 32 is LocalPosition id 500 is custom message
+			if (message.msgid == 32 || message.msgid == 500)
+				printf("[In interface.cpp] msgid: %d, Framing: %d \n", message.msgid, msg_received);
 
 			if (message_received_cb)
 				message_received_cb(&message, msg_received);

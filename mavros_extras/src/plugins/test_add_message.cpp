@@ -52,7 +52,9 @@ private:
 	void test_add_message_cb(const mavros_msgs::StoreTestMessageRos::ConstPtr &req)
 	{
 		mavlink::test_add_custom_message::msg::TEST_ADD_MESSAGE msg;
+		
 		msg.counter = req->counter;
+		ROS_INFO("Send counter to FCU: %lu", msg.counter);
 		UAS_FCU(m_uas)->send_message_ignore_drop(msg);
 	}
 
@@ -63,6 +65,7 @@ private:
 
 		test_add_msg->header.stamp = ros::Time::now();
 		test_add_msg->counter = rst.counter;
+		ROS_INFO("Receive counter from FCU: %lu", test_add_msg->counter);
 		test_add_message_pub.publish(test_add_msg);
 	}
 };
