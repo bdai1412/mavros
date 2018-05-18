@@ -43,6 +43,9 @@ add_message_files(
   Waypoint.msg
   WaypointList.msg
   WaypointReached.msg
+
+  StoreTestMessageRos.msg
+
 )
 
 add_service_files(

@@ -78,6 +78,8 @@ add_library(mavros_extras
   src/plugins/vibration.cpp
   src/plugins/vision_pose_estimate.cpp
   src/plugins/vision_speed_estimate.cpp
+  
+  src/plugins/test_add_message.cpp
 )
 target_link_libraries(mavros_extras
   ${mavros_LIBRARIES}
