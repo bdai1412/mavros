@@ -12,10 +12,29 @@
  */
 
 #include <mavros/mavros.h>
+#include <signal.h>
+
+
+static void sigintHandle(int sig)
+{
+  ros::Rate rate_wait(1.0);
+	bool is_offboard_node_alive = false;
+	ros::param::get("/is_offboard_node_alive", is_offboard_node_alive);
+	while(is_offboard_node_alive)
+	{
+		ros::param::get("/is_offboard_node_alive", is_offboard_node_alive);
+		ROS_WARN("Waiting for offboard shutting down! Please kill offboard first!");
+		rate_wait.sleep();
+	}
+	ROS_WARN("Mavros Exiting!");
+  ros::shutdown();
+}
 
 int main(int argc, char *argv[])
 {
-	ros::init(argc, argv, "mavros");
+	ros::init(argc, argv, "mavros", ros::init_options::NoSigintHandler);
+
+  signal(SIGINT, sigintHandle);
 
 	mavros::MavRos mavros;
 	mavros.spin();
